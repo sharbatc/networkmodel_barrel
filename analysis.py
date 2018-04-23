@@ -804,9 +804,7 @@ generating first current using ou-process
 def gen_ou(plot=False):
     I0 = 10.0  # nA
     tau = 10.0  # ms
-    #Delta_T = 1.0/20  #ms, sampling freq = 20 kHz
     Delta_T = 1.0/10  #ms, sampling freq = 20 kHz
-    #sigma = 1.0  # unitless
     sigma_0 = 1.0  # unitless
     Delta_sigma = 2.0  # unitless
     f = 0.2 * 0.001  # kHz 
