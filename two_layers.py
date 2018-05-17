@@ -102,6 +102,8 @@ dI_noise/dt = -I_noise/tau_exc_1 : amp
 dI_exc/dt = -I_exc/tau_exc_1 : amp
 dI_inh/dt = -I_inh/tau_inh_1 : amp
 '''
+#w1/2 for spike triggered 
+#vt1/2 for threshold doesnt change with voltage
 
 reset_1='''
 v=v_reset_1
@@ -663,7 +665,8 @@ if save_data:
 plt.show()
 
 
-
+## State monitor for voltages of simple spikes in a connected pair
+## excitatory and then switched to a GABAergic neurons, most quiescent neurons
 
 
 

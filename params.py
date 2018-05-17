@@ -9,9 +9,9 @@ import preprocessing
 import numpy
 
 
-param_set_exc = 3 # 2
+param_set_exc = 3
 param_set_nfs = 2 
-param_set_fs  = 1 # 0
+param_set_fs  = 1 
 param_set_sst  = 1
 
 
@@ -34,12 +34,6 @@ size = {'L23':L23_size, 'L4':L4_size}
 
 
 ###### neural parameters
-
-#L23_exc= {'tau_m':28.4, 'R':160, 'tau_ref':4, 'v_thresh':-37.9, 'v_reset':-68.1, 'v_rest':-68.1} # avermann 2011
-#L23_vip= {'tau_m':21.2, 'R':208, 'tau_ref':4, 'v_thresh':-36.3, 'v_reset':-62.6, 'v_rest':-62.6} # avermann 2011, NFS
-#L23_pv = {'tau_m':9.3 , 'R':99 , 'tau_ref':4, 'v_thresh':-37.4, 'v_reset':-67.5, 'v_rest':-67.5} # avermann 2011, FS
-#L23_sst= {'tau_m':15, 'R':150, 'tau_ref':4, 'v_thresh':-37, 'v_reset':-61, 'v_rest':-61} # lee 2013 nature, only contains R and v_rest
-
 L23_exc= {}
 L23_vip= {}
 L23_pv = {}
