@@ -5,6 +5,8 @@
     
     PSC : Exponential decay 
     PSP : Alpha shape (double exponential)
+
+    Last modified : 11 Jun 2018 by Sharbat
 '''
 
 import numpy
@@ -158,61 +160,6 @@ def Fit_PSP(peak, half_width, tau_m, R):
     w = Find_w(peak, tau_syn, tau_m, R)
     
     return tau_syn, w
-
-def find_2elements_lognormal(p_hat_1,p_hat_2,lognormal_mean,lognormal_std):
-    '''
-    fit a 2 elements distribution (w_1,w_2) with distribution (p_hat1,p_hat2)
-    based on a lognormal distribution parameters
-    1 ==> weak
-    2 ==> strong
-    return (w_1, w_2)
-    '''
-    
-    if numpy.abs(p_hat_1+p_hat_2-1) > 0.05:
-        raise NameError("p1+p2 should equal 1")
-    
-    x = numpy.arange(0,5,0.01)
-    cdf = numpy.arange(0,5,0.01)
-    pdf = numpy.arange(0,5,0.01)
-    for i in range(1,x.__len__()):
-        cdf[i] =  0.5 + 0.5*math.erf((numpy.log(x[i])-lognormal_mean)/(numpy.sqrt(2)*lognormal_std))
-        pdf[i] = 1/(x[i]*lognormal_std*numpy.sqrt(2*math.pi)) * numpy.exp(-(numpy.log(x[i])-lognormal_mean)**2/(2*lognormal_std**2))
-        
-    index_star = find_nearest(cdf, p_hat_1)
-    w_star = x[index_star]
-    #print w_star
-
-    w_pdf = x*pdf # w*p(w)
-     
-    w_1 = numpy.sum(w_pdf[:index_star])/(p_hat_1*100)   # 100 since dx = 0.01
-    w_2 = numpy.sum(w_pdf[index_star:])/(p_hat_2*100)   # 100 since dx = 0.01
-    
-    return w_1, w_2
-    
-def calculate_2elements(p_ave,p2,N_h,N_nh,lognormal_mean, lognormal_std):
-    '''
-    calculate 2elements given p_[hub to hub]
-    based on lognormal distribution parameters
-    only hub->hub connections are dense, others are sparse
-    
-    p2 = p_[hub to hub]
-    p_ave = p_average
-    return (p1, p2, w_1, w_2)
-    '''
-    
-    N = N_h + N_nh
-    p1 = (N**2*p_ave - N_h**2*p2)/(N_nh**2 + 2*N_h*N_nh)
-    
-    p_hat_2 = (N_h**2*p2 + N_h*N_nh*p1)/(N**2*p_ave)
-    p_hat_1 = ((N_nh**2 + N_h*N_nh)*p1)/(N**2*p_ave)
-    
-    #print p_hat_1, p_hat_2, p_hat_1+p_hat_2
-    
-    w_1, w_2 = find_2elements_lognormal(p_hat_1, p_hat_2, lognormal_mean, lognormal_std)
-
-    #print w_1*p_hat_1 + w_2*p_hat_2
-
-    return p1, p2, w_1, w_2
     
 
 def CUBA_to_COBA(w_sim_cuba, El, E_syn):
@@ -228,16 +175,3 @@ def CUBA_to_COBA(w_sim_cuba, El, E_syn):
     '''
     
     return - w_sim_cuba / (El - E_syn)
-
-
-#print Fit_PSP(0.48, 30, 15, 150)
-
-# L5A approx: tau_m = 37.6, R = 210 Mohm, peak = 0.66, rise_time = 2.99, half-width = 34
- 
-#PSP_alpha(210,0.062,2.3,37.6)
-
-#PSP_alpha(1,1,10,20)
-
-#log_mean, log_std = -0.84616167337581372, 0.92454423592588297
-#print calculate_2elements(p_ave=0.19,p2=0.5,N_h=95,N_nh=454-95,lognormal_mean=log_mean, lognormal_std=log_std)
-

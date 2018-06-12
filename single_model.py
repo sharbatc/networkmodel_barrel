@@ -3,13 +3,24 @@
 	Testing single neuron models
 
 	Started : 13 May 2018 by Sharbat
-	Last modified : 17 May 2018 by Sharbat
+	Last modified : 4 Jun 2018 by Sharbat
 '''
 from brian2 import *
 import numpy
 import matplotlib.pyplot as plt
 import math
+import params
 
+param_set_exc = params.param_set_exc
+param_set_fs  = params.param_set_fs
+param_set_sst = params.param_set_sst
+param_set_vip = params.param_set_nfs
+
+
+exc_param = numpy.loadtxt('data/exc.txt', delimiter = ',')[param_set_exc]
+fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
+sst_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_sst]
+vip_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_vip]
 
 C_1 = exc_param[0] * nF
 gl_1 = exc_param[1] * uS
@@ -46,10 +57,11 @@ vt = v0_1 + vt1 + vt2 : volt
 rate = rate0_1*exp((v-vt)/deltaV_1): Hz
 I = I_syn + I_ext : amp
 I_ext: amp
-I_syn = I_exc + I_inh + I_noise : amp
+I_syn = I_exc €+ I_inh + I_noise : amp
 dI_noise/dt = -I_noise/tau_exc_1 : amp
 dI_exc/dt = -I_exc/tau_exc_1 : amp
 dI_inh/dt = -I_inh/tau_inh_1 : amp
+'''
 
 reset_1='''
 v=v_reset_1

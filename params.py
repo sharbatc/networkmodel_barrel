@@ -2,33 +2,37 @@
     Project Disinhibition
     Containing whole parameters of network and neurons
     Started : 30 March, 2015 by Hesam SETAREH
-    Last modified : 23 April, 2018 by Sharbat
+    Last modified : 11 Jun, 2018 by Sharbat
 '''
 
 import preprocessing
 import numpy
 
 
+## tested params, might have to be changed##
 param_set_exc = 3
 param_set_nfs = 2 
 param_set_fs  = 1 
-param_set_sst  = 1
-
+## tested params, might have to be changed ##
 
 exc_param = numpy.loadtxt('data/exc.txt', delimiter = ',')[param_set_exc]
 nfs_param = numpy.loadtxt('data/nfs.txt', delimiter = ',')[param_set_nfs]
 fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
-sst_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_sst] # nfs instead of sst
 
 
-###### size of the populations
-# important: we don't implement non-vip neuron 
+###### cell numbers (population size)
 
-# New numbers, exc from Lefort, other numbers from Taro experiment (real and experimentally extracted numbers)
+# New numbers, exc from Lefort, other numbers from Taro experiment only in L2/3 and L4(real and experimentally extracted numbers)
 
-L23_size = {'exc':1691, 'sst':67, 'vip':95, 'pv': 101}
+# Other numbers are from Lefort's total imhibitory neurons, divided according to 
+
+# numbers 
+L2_size = {'exc':546, 'sst':22, 'vip':32, 'pv':34}
+L3_size = {'exc':1145, 'sst':45, 'vip':63,'pv':67}
 L4_size  = {'exc':1656, 'sst':21, 'vip':7, 'pv': 87} # we do not implement vip neurons for L4
-
+L5A_size = {'exc':454, 'sst':}
+L5B_size = {'exc':641,'sst':,'vip':,'pv':}
+L6_size = {'exc':1288,'sst'}
 
 size = {'L23':L23_size, 'L4':L4_size}
 
