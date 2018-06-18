@@ -5,7 +5,7 @@
     L4 contains exc, pv(fs) and stt, but not vip neurons
     L2/3 contains exc, pv(fs) and stt and vip neurons
     Started : 4 July, 2017 by Hesam SETAREH
-    Last modified : 23 April, 2017 by Sharbat 
+    Last modified : 11 Jun, 2017 by Sharbat 
 '''
 
 from brian2 import *
@@ -47,18 +47,21 @@ if save_data:
 
 time = 3000 #ms
 param_set_exc = params.param_set_exc
-param_set_fs  = params.param_set_fs
-param_set_sst = params.param_set_sst
-param_set_vip = params.param_set_nfs
+param_set_nfs  = params.param_set_nfs
+param_set_fs = params.param_set_fs
 
+## tested params, might have to be changed ##
 
 exc_param = numpy.loadtxt('data/exc.txt', delimiter = ',')[param_set_exc]
+nfs_param = numpy.loadtxt('data/nfs.txt', delimiter = ',')[param_set_nfs]
 fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
-sst_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_sst]
-vip_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_vip]
 
 
 ############### neural parameters
+
+# reversal potential for COBA synapses
+E_exc = 0 * mV
+E_inh = -80 * mV
 
 ### 1---> exc neuron
 
@@ -81,11 +84,14 @@ tau_vt1_1 = exc_param[12] * ms
 amp_vt2_1 = exc_param[13] * mV
 tau_vt2_1 = exc_param[14] * ms
 
-rate0_1 = defaultclock.dt/ms * Hz * 100
+lambda0_1 = defaultclock.dt/ms * Hz * 100
 
 tau_exc_1 = params.conn_param['L23_L23']['exc_exc']['tau_syn'] * ms
 tau_inh_1 = params.conn_param['L23_L23']['pv_exc']['tau_syn'] * ms
 
+
+# w = eta
+# vt= gamma
 
 eqs_1 = '''
 dv/dt = (-gl_1*(v-El_1)-w1-w2+I)/C_1 : volt
@@ -94,16 +100,17 @@ dw2/dt = -w2/tau_w2_1 : amp
 dvt1/dt = -vt1/tau_vt1_1 : volt
 dvt2/dt = -vt2/tau_vt2_1 : volt
 vt = v0_1 + vt1 + vt2 : volt
-rate = rate0_1*exp((v-vt)/deltaV_1): Hz
+lambda = lambda0_1*exp((v-vt)/deltaV_1): Hz
 I = I_syn + I_ext : amp
 I_ext: amp
 I_syn = I_exc + I_inh + I_noise : amp
-dI_noise/dt = -I_noise/tau_exc_1 : amp
-dI_exc/dt = -I_exc/tau_exc_1 : amp
-dI_inh/dt = -I_inh/tau_inh_1 : amp
+I_noise = -g_noise*(v-E_exc) : amp
+I_exc = -g_exc*(v-E_exc) : amp
+I_inh = -g_inh*(v-E_inh) : amp
+dg_noise/dt = -g_noise/tau_exc_1 : siemens
+dg_exc/dt = -g_exc/tau_exc_1 : siemens
+dg_inh/dt = -g_inh/tau_inh_1 : siemens
 '''
-#w1/2 for spike triggered 
-#vt1/2 for threshold doesnt change with voltage
 
 reset_1='''
 v=v_reset_1
@@ -135,11 +142,13 @@ tau_vt1_2 = fs_param[12] * ms
 amp_vt2_2 = fs_param[13] * mV
 tau_vt2_2 = fs_param[14] * ms
 
-rate0_2 = defaultclock.dt/ms * Hz * 1000
+lambda0_2 = defaultclock.dt/ms * Hz * 1000
 
 tau_exc_2 = params.conn_param['L23_L23']['exc_pv']['tau_syn'] * ms
 tau_inh_2 = params.conn_param['L23_L23']['pv_pv']['tau_syn'] * ms
 
+# w = eta
+# vt= gamma
 
 eqs_2 = '''
 dv/dt = (-gl_2*(v-El_2)-w1-w2+I)/C_2 : volt
@@ -148,13 +157,16 @@ dw2/dt = -w2/tau_w2_2 : amp
 dvt1/dt = -vt1/tau_vt1_2 : volt
 dvt2/dt = -vt2/tau_vt2_2 : volt
 vt = v0_2 + vt1 + vt2 : volt
-rate = rate0_1*exp((v-vt)/deltaV_2): Hz
+lambda = lambda0_1*exp((v-vt)/deltaV_2): Hz
 I = I_syn + I_ext : amp
 I_ext: amp
 I_syn = I_exc + I_inh + I_noise : amp
-dI_noise/dt = -I_noise/tau_exc_2 : amp
-dI_exc/dt = -I_exc/tau_exc_2 : amp
-dI_inh/dt = -I_inh/tau_inh_2 : amp
+I_noise = -g_noise*(v-E_exc) : amp
+I_exc = -g_exc*(v-E_exc) : amp
+I_inh = -g_inh*(v-E_inh) : amp
+dg_noise/dt = -g_noise/tau_exc_2 : siemens
+dg_exc/dt = -g_exc/tau_exc_2 : siemens
+dg_inh/dt = -g_inh/tau_inh_2 : siemens
 '''
 
 reset_2='''
@@ -167,7 +179,7 @@ vt2+=amp_vt2_2
 
 
 
-### 3 ---> sst neuron, but we use nfs neuron parameters for that
+### 3 ---> sst neuron, but we use nfs (vip) neuron parameters for that
 
 C_3 = sst_param[0] * nF
 gl_3 = sst_param[1] * uS
@@ -188,11 +200,13 @@ tau_vt1_3 = sst_param[12] * ms
 amp_vt2_3 = sst_param[13] * mV
 tau_vt2_3 = sst_param[14] * ms
 
-rate0_3 = defaultclock.dt/ms * Hz * 1000
+lambda0_3 = defaultclock.dt/ms * Hz * 1000
 
 tau_exc_3 = params.conn_param['L23_L23']['exc_sst']['tau_syn'] * ms     # nfs instead of sst
 tau_inh_3 = params.conn_param['L23_L23']['sst_sst']['tau_syn'] * ms     # nfs instead of sst
 
+# w = eta
+# vt= gamma
 
 eqs_3 = '''
 dv/dt = (-gl_3*(v-El_3)-w1-w2+I)/C_3 : volt
@@ -201,13 +215,16 @@ dw2/dt = -w2/tau_w2_3 : amp
 dvt1/dt = -vt1/tau_vt1_3 : volt
 dvt2/dt = -vt2/tau_vt2_3 : volt
 vt = v0_3 + vt1 + vt2 : volt
-rate = rate0_1*exp((v-vt)/deltaV_3): Hz
+lambda = lambda0_1*exp((v-vt)/deltaV_3): Hz
 I = I_syn + I_ext : amp
 I_ext: amp
 I_syn = I_exc + I_inh + I_noise : amp
-dI_noise/dt = -I_noise/tau_exc_3 : amp
-dI_exc/dt = -I_exc/tau_exc_3 : amp
-dI_inh/dt = -I_inh/tau_inh_3 : amp
+I_noise = -g_noise*(v-E_exc) : amp
+I_exc = -g_exc*(v-E_exc) : amp
+I_inh = -g_inh*(v-E_inh) : amp
+dg_noise/dt = -g_noise/tau_exc_3 : siemens
+dg_exc/dt = -g_exc/tau_exc_3 : siemens
+dg_inh/dt = -g_inh/tau_inh_3 : siemens
 '''
 
 reset_3='''
@@ -240,7 +257,7 @@ tau_vt1_4 = vip_param[12] * ms
 amp_vt2_4 = vip_param[13] * mV
 tau_vt2_4 = vip_param[14] * ms
 
-rate0_4 = defaultclock.dt/ms * Hz * 1000
+lambda0_4 = defaultclock.dt/ms * Hz * 1000
 
 tau_exc_4 = params.conn_param['L23_L23']['exc_vip']['tau_syn'] * ms
 tau_inh_4 = params.conn_param['L23_L23']['vip_vip']['tau_syn'] * ms
@@ -255,13 +272,16 @@ dw2/dt = -w2/tau_w2_4 : amp
 dvt1/dt = -vt1/tau_vt1_4 : volt
 dvt2/dt = -vt2/tau_vt2_4 : volt
 vt = v0_4 + vt1 + vt2 : volt
-rate = rate0_1*exp((v-vt)/deltaV_4): Hz
+lambda = lambda0_1*exp((v-vt)/deltaV_4): Hz
 I = I_syn + I_ext : amp
 I_ext: amp
 I_syn = I_exc + I_inh + I_noise : amp
-dI_noise/dt = -I_noise/tau_exc_4 : amp
-dI_exc/dt = -I_exc/tau_exc_4 : amp
-dI_inh/dt = -I_inh/tau_inh_4 : amp
+I_noise = -g_noise*(v-E_exc) : amp
+I_exc = -g_exc*(v-E_exc) : amp
+I_inh = -g_inh*(v-E_inh) : amp
+dg_noise/dt = -g_noise/tau_exc_4 : siemens
+dg_exc/dt = -g_exc/tau_exc_4 : siemens
+dg_inh/dt = -g_inh/tau_inh_4 : siemens
 '''
 
 reset_4='''
@@ -271,6 +291,7 @@ w2+=amp_w2_4
 vt1+=amp_vt1_4
 vt2+=amp_vt2_4
 '''
+
 
 
 ############## forming populations

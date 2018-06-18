@@ -24,48 +24,76 @@ fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
 
 # New numbers, exc from Lefort, other numbers from Taro experiment only in L2/3 and L4(real and experimentally extracted numbers)
 
-# Other numbers are from Lefort's total imhibitory neurons, divided according to 
+# Other numbers are from Lefort's total imhibitory neurons, divided according to Rudy 2013 ratios
 
 # numbers 
 L2_size = {'exc':546, 'sst':22, 'vip':32, 'pv':34}
 L3_size = {'exc':1145, 'sst':45, 'vip':63,'pv':67}
-L4_size  = {'exc':1656, 'sst':21, 'vip':7, 'pv': 87} # we do not implement vip neurons for L4
-L5A_size = {'exc':454, 'sst':}
-L5B_size = {'exc':641,'sst':,'vip':,'pv':}
-L6_size = {'exc':1288,'sst'}
+L4_size  = {'exc':1656, 'sst':21, 'vip':7, 'pv': 87} # hesam did not implement vip neurons for L4
+L5A_size = {‘exc’ : 454, 'sst' : 40, 'vip' : 7, 'pv' : 40} 
+L5B_size = {‘exc’ : 641, 'sst' : 60, 'vip' : 7, 'pv' : 60} 
+L6_size = {‘exc’ : 1288, 'sst' : 50, 'vip' : 20, 'pv' : 50}
 
-size = {'L23':L23_size, 'L4':L4_size}
+
+size = {'L2':L2_size, 'L3':L2_size, 'L4':L4_size, 'L5A':L5A_size, 'L5B':L5B_size, 'L6':L6_size}
 
 
 ###### neural parameters
-L23_exc= {}
-L23_vip= {}
-L23_pv = {}
-L23_sst= {}
 
+## pv is fs seamlessly 
+## sst and vip are for the moment taken to be nfs
 
-L23_exc['R'] = 1.0/exc_param[1]
-L23_pv['R'] = 1.0/fs_param[1]
-L23_sst['R'] = 1.0/nfs_param[1]
-L23_vip['R'] = 1.0/nfs_param[1]
+L2_exc= {}
+L2_vip= {}
+L2_pv = {}
+L2_sst= {}
 
-L23_exc['tau_m'] = exc_param[0]/exc_param[1]
-L23_vip['tau_m'] = nfs_param[0]/nfs_param[1]
-L23_sst['tau_m'] = sst_param[0]/sst_param[1]
-L23_pv['tau_m'] = fs_param[0]/fs_param[1]
+L3_exc= {}
+L3_vip= {}
+L3_pv = {}
+L3_sst= {}
 
-
-
-#L4_exc = {'tau_m':34.8, 'R':302, 'tau_ref':4, 'v_thresh':-39.7, 'v_reset':-66, 'v_rest':-66} # lefort 2009
-#L4_vip= {'tau_m':21.2, 'R':208, 'tau_ref':4, 'v_thresh':-36.3, 'v_reset':-62.6, 'v_rest':-62.6} # copied from L23
-#L4_pv = {'tau_m':9.3 , 'R':99 , 'tau_ref':4, 'v_thresh':-37.4, 'v_reset':-67.5, 'v_rest':-67.5} # copied from L23
-#L4_sst= {'tau_m':15, 'R':150, 'tau_ref':4, 'v_thresh':-37, 'v_reset':-61, 'v_rest':-61} # copied from L23
-
-L4_exc = {}
+L4_exc= {}
+L4_vip= {}
 L4_pv = {}
 L4_sst= {}
 
+L5A_exc= {}
+L5A_vip= {}
+L5A_pv = {}
+L5A_sst= {}
 
+L5B_exc= {}
+L5B_vip= {}
+L5B_pv = {}
+L5B_sst= {}
+
+L6_exc= {}
+L6_vip= {}
+L6_pv = {}
+L6_sst= {}
+
+L2_exc['R'] = 1.0/exc_param[1]
+L2_pv['R'] = 1.0/fs_param[1]
+L2_sst['R'] = 1.0/nfs_param[1]
+L2_vip['R'] = 1.0/nfs_param[1]
+
+L3_exc['R'] = 1.0/exc_param[1]
+L3_pv['R'] = 1.0/fs_param[1]
+L3_sst['R'] = 1.0/nfs_param[1]
+L3_vip['R'] = 1.0/nfs_param[1]
+
+L2_exc['tau_m'] = exc_param[0]/exc_param[1]
+L2_vip['tau_m'] = nfs_param[0]/nfs_param[1]
+L2_sst['tau_m'] = nfs_param[0]/nfs_param[1]
+L2_pv['tau_m'] = fs_param[0]/fs_param[1]
+
+L3_exc['tau_m'] = exc_param[0]/exc_param[1]
+L3_vip['tau_m'] = nfs_param[0]/nfs_param[1]
+L3_sst['tau_m'] = nfs_param[0]/nfs_param[1]
+L3_pv['tau_m'] = fs_param[0]/fs_param[1]
+
+## L4 vip is not modelled 
 L4_exc['R'] = 1.0/exc_param[1]
 L4_pv['R'] = 1.0/fs_param[1]
 L4_sst['R'] = 1.0/nfs_param[1]
@@ -74,11 +102,44 @@ L4_exc['tau_m'] = exc_param[0]/exc_param[1]
 L4_sst['tau_m'] = sst_param[0]/sst_param[1]
 L4_pv['tau_m'] = fs_param[0]/fs_param[1]
 
+## L5A
+L5A_exc['R'] = 1.0/exc_param[1]
+L5A_pv['R'] = 1.0/fs_param[1]
+L5A_sst['R'] = 1.0/nfs_param[1]
 
-L23_neural = {'exc':L23_exc, 'sst':L23_sst, 'vip':L23_vip, 'pv':L23_pv}
+L5A_exc['tau_m'] = exc_param[0]/exc_param[1]
+L5A_sst['tau_m'] = sst_param[0]/sst_param[1]
+L5A_pv['tau_m'] = fs_param[0]/fs_param[1]
+
+
+## L5B
+L5B_exc['R'] = 1.0/exc_param[1]
+L5B_pv['R'] = 1.0/fs_param[1]
+L5B_sst['R'] = 1.0/nfs_param[1]
+
+L5B_exc['tau_m'] = exc_param[0]/exc_param[1]
+L5B_sst['tau_m'] = sst_param[0]/sst_param[1]
+L5B_pv['tau_m'] = fs_param[0]/fs_param[1]
+
+## L6
+L6_exc['R'] = 1.0/exc_param[1]
+L6_pv['R'] = 1.0/fs_param[1]
+L6_sst['R'] = 1.0/nfs_param[1]
+
+L6_exc['tau_m'] = exc_param[0]/exc_param[1]
+L6_sst['tau_m'] = sst_param[0]/sst_param[1]
+L6_pv['tau_m'] = fs_param[0]/fs_param[1]
+
+## All params
+L2_neural = {'exc':L2_exc, 'sst':L2_sst, 'vip':L2_vip, 'pv':L2_pv}
+L3_neural = {'exc':L3_exc,, 'sst':L3_sst, 'vip':L3_vip, 'pv':L3_pv}
 L4_neural  = {'exc':L4_exc, 'sst':L4_sst, 'pv':L4_pv}
+L5A_neural = {'exc':L5A_exc, 'sst':L5A_exc, 'pv':L5A_pv}
+L5B_neural = {'exc':L5B_exc, 'sst':L5B_exc, 'pv':L5B_pv}
+L6_neural = {'exc':L6_exc, 'sst':L6_exc, 'pv':L6_pv}
 
-neural_param = {'L23':L23_neural, 'L4':L4_neural}
+
+neural_param = {'L2':L2_neural, 'L3':L3_neural, 'L4':L4_neural, 'L5A':L5A_neural, 'L5B':L5B_neural, 'L6':L6_neural}
 
 ###################### connection parameters
 
@@ -88,7 +149,7 @@ conn_param = {'L23_L23':None, 'L4_L4':None, 'L4_L23':None}
 conn_param['L23_L23'] = {}
 
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 26.2, neural_param['L23']['exc']['tau_m'], neural_param['L23']['exc']['R']) # L23_exc to L23_exc, avermann 2011
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 26.2, neural_param['L2']['exc']['tau_m'], neural_param['L23']['exc']['R']) # L23_exc to L23_exc, avermann 2011
 conn_param['L23_L23']['exc_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.168} 
 
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.82, 13.7, neural_param['L23']['pv']['tau_m'], neural_param['L23']['pv']['R']) # L23_exc to L23_pv, avermann 2011

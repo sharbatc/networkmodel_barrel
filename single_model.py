@@ -12,15 +12,25 @@ import math
 import params
 
 param_set_exc = params.param_set_exc
-param_set_fs  = params.param_set_fs
-param_set_sst = params.param_set_sst
-param_set_vip = params.param_set_nfs
+param_set_nfs  = params.param_set_nfs
+param_set_fs = params.param_set_fs
 
+## tested params, might have to be changed ##
 
 exc_param = numpy.loadtxt('data/exc.txt', delimiter = ',')[param_set_exc]
+nfs_param = numpy.loadtxt('data/nfs.txt', delimiter = ',')[param_set_nfs]
 fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
-sst_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_sst]
-vip_param  = numpy.loadtxt('data/nfs.txt' , delimiter = ',')[param_set_vip]
+
+
+## exc neuron 
+
+############### neural parameters
+
+# reversal potential for COBA synapses
+E_exc = 0 * mV
+E_inh = -80 * mV
+
+### 1---> exc neuron
 
 C_1 = exc_param[0] * nF
 gl_1 = exc_param[1] * uS
@@ -41,26 +51,23 @@ tau_vt1_1 = exc_param[12] * ms
 amp_vt2_1 = exc_param[13] * mV
 tau_vt2_1 = exc_param[14] * ms
 
-rate0_1 = defaultclock.dt/ms * Hz * 100
+lambda0_1 = defaultclock.dt/ms * Hz * 100
 
-tau_exc_1 = params.conn_param['L23_L23']['exc_exc']['tau_syn'] * ms
-tau_inh_1 = params.conn_param['L23_L23']['pv_exc']['tau_syn'] * ms
+# tau_exc_1 = params.conn_param['L23_L23']['exc_exc']['tau_syn'] * ms
+# tau_inh_1 = params.conn_param['L23_L23']['pv_exc']['tau_syn'] * ms
 
+
+# w = eta
+# vt= gamma
 
 eqs_1 = '''
-dv/dt = (-gl_1*(v-El_1)-w1-w2+I)/C_1 : volt
+dv/dt = (-gl_1*(v-El_1)-w1-w2+0.324*nA)/C_1 : volt
 dw1/dt = -w1/tau_w1_1 : amp
 dw2/dt = -w2/tau_w2_1 : amp
 dvt1/dt = -vt1/tau_vt1_1 : volt
 dvt2/dt = -vt2/tau_vt2_1 : volt
 vt = v0_1 + vt1 + vt2 : volt
-rate = rate0_1*exp((v-vt)/deltaV_1): Hz
-I = I_syn + I_ext : amp
-I_ext: amp
-I_syn = I_exc €+ I_inh + I_noise : amp
-dI_noise/dt = -I_noise/tau_exc_1 : amp
-dI_exc/dt = -I_exc/tau_exc_1 : amp
-dI_inh/dt = -I_inh/tau_inh_1 : amp
+lambda = lambda0_1*exp((v-vt)/deltaV_1): Hz
 '''
 
 reset_1='''
@@ -70,3 +77,4 @@ w2+=amp_w2_1
 vt1+=amp_vt1_1
 vt2+=amp_vt2_1
 '''
+
