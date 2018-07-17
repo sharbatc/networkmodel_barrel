@@ -144,12 +144,14 @@ def Find_w(peak, tau_syn, tau_m, R):
 
 def Fit_PSP(peak, half_width, tau_m, R):
     '''
+    NOTE (Sharbat) : Use half-width means here from Avermann
+    
     Fits alpha shape PSP (Exp decay PSC) using experimental data
     try to produce PSP pulse with same peak and half_width of experimental PSP
     peak    : experimental weight in mV
     half_width : experimental half width of PSP in ms
     tau_m   : membrane potential time constant in ms
-    R       : membrane resistance in MOhm
+    R       : membrane resistance in MOhm   
     
     calculated data
     tau_syn    : synaptic time constant in ms

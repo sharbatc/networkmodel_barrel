@@ -30,12 +30,12 @@ fs_param  = numpy.loadtxt('data/fs.txt' , delimiter = ',')[param_set_fs]
 L2_size = {'exc':546, 'sst':22, 'vip':32, 'pv':34}
 L3_size = {'exc':1145, 'sst':45, 'vip':63,'pv':67}
 L4_size  = {'exc':1656, 'sst':21, 'vip':7, 'pv': 87} # hesam did not implement vip neurons for L4
-L5A_size = {‘exc’ : 454, 'sst' : 40, 'vip' : 7, 'pv' : 40} 
-L5B_size = {‘exc’ : 641, 'sst' : 60, 'vip' : 7, 'pv' : 60} 
-L6_size = {‘exc’ : 1288, 'sst' : 50, 'vip' : 20, 'pv' : 50}
+L5A_size = {'exc' : 454, 'sst' : 40, 'vip' : 7, 'pv' : 40} 
+L5B_size = {'exc' : 641, 'sst' : 60, 'vip' : 7, 'pv' : 60} 
+L6_size = {'exc' : 1288, 'sst' : 50, 'vip' : 20, 'pv' : 50}
 
 
-size = {'L2':L2_size, 'L3':L2_size, 'L4':L4_size, 'L5A':L5A_size, 'L5B':L5B_size, 'L6':L6_size}
+size = {'L2':L2_size, 'L3':L3_size, 'L4':L4_size, 'L5A':L5A_size, 'L5B':L5B_size, 'L6':L6_size}
 
 
 ###### neural parameters
@@ -99,7 +99,7 @@ L4_pv['R'] = 1.0/fs_param[1]
 L4_sst['R'] = 1.0/nfs_param[1]
 
 L4_exc['tau_m'] = exc_param[0]/exc_param[1]
-L4_sst['tau_m'] = sst_param[0]/sst_param[1]
+L4_sst['tau_m'] = nfs_param[0]/nfs_param[1]
 L4_pv['tau_m'] = fs_param[0]/fs_param[1]
 
 ## L5A
@@ -108,7 +108,7 @@ L5A_pv['R'] = 1.0/fs_param[1]
 L5A_sst['R'] = 1.0/nfs_param[1]
 
 L5A_exc['tau_m'] = exc_param[0]/exc_param[1]
-L5A_sst['tau_m'] = sst_param[0]/sst_param[1]
+L5A_sst['tau_m'] = nfs_param[0]/nfs_param[1]
 L5A_pv['tau_m'] = fs_param[0]/fs_param[1]
 
 
@@ -118,7 +118,7 @@ L5B_pv['R'] = 1.0/fs_param[1]
 L5B_sst['R'] = 1.0/nfs_param[1]
 
 L5B_exc['tau_m'] = exc_param[0]/exc_param[1]
-L5B_sst['tau_m'] = sst_param[0]/sst_param[1]
+L5B_sst['tau_m'] = nfs_param[0]/nfs_param[1]
 L5B_pv['tau_m'] = fs_param[0]/fs_param[1]
 
 ## L6
@@ -127,12 +127,12 @@ L6_pv['R'] = 1.0/fs_param[1]
 L6_sst['R'] = 1.0/nfs_param[1]
 
 L6_exc['tau_m'] = exc_param[0]/exc_param[1]
-L6_sst['tau_m'] = sst_param[0]/sst_param[1]
+L6_sst['tau_m'] = nfs_param[0]/nfs_param[1]
 L6_pv['tau_m'] = fs_param[0]/fs_param[1]
 
 ## All params
 L2_neural = {'exc':L2_exc, 'sst':L2_sst, 'vip':L2_vip, 'pv':L2_pv}
-L3_neural = {'exc':L3_exc,, 'sst':L3_sst, 'vip':L3_vip, 'pv':L3_pv}
+L3_neural = {'exc':L3_exc, 'sst':L3_sst, 'vip':L3_vip, 'pv':L3_pv}
 L4_neural  = {'exc':L4_exc, 'sst':L4_sst, 'pv':L4_pv}
 L5A_neural = {'exc':L5A_exc, 'sst':L5A_exc, 'pv':L5A_pv}
 L5B_neural = {'exc':L5B_exc, 'sst':L5B_exc, 'pv':L5B_pv}

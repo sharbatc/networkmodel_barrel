@@ -1,9 +1,9 @@
 '''
 	Thesis Project
-	Testing single neuron models
+	Library with single neuron models
 
 	Started : 13 May 2018 by Sharbat
-	Last modified : 4 Jun 2018 by Sharbat
+	Last modified : 29 Jun 2018 by Sharbat
 '''
 import brian2 as b2
 import numpy
