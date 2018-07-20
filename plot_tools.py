@@ -30,10 +30,10 @@ def plot_voltage_and_current_traces(voltage_monitor, spike_monitor, current, tit
     time_values_ms = voltage_monitor.t / b2.ms
 
     # current
-    axis_c = plt.subplot(211)
-    c = current(voltage_monitor.t, 0)
-    max_current = max(current(voltage_monitor.t, 0))
-    min_current = min(current(voltage_monitor.t, 0))
+    axis_c = plt.subplot(411)
+    c = current(voltage_monitor.t)
+    max_current = max(current(voltage_monitor.t))
+    min_current = min(current(voltage_monitor.t))
     margin = 1.05 * (max_current - min_current)
     # plot the input current time-aligned with the voltage monitor
     plt.plot(time_values_ms, c, "r", lw=2)
@@ -42,7 +42,7 @@ def plot_voltage_and_current_traces(voltage_monitor, spike_monitor, current, tit
     # plt.xlabel("t [ms]")
     plt.ylabel("Input current [A] \n min: {0} \nmax: {1}".format(min_current, max_current))
     plt.grid()
-    axis_v = plt.subplot(212)
+    axis_v = plt.subplot(412)
 
     volts = voltage_monitor[0].v
 
@@ -64,6 +64,13 @@ def plot_voltage_and_current_traces(voltage_monitor, spike_monitor, current, tit
     plt.ylim((min_val - margin) / b2.mV, (max_val + margin) / b2.mV)
     plt.xlabel("t [ms]")
     plt.ylabel("membrane voltage [mV]\n min: {0}\n max: {1}".format(min_val, max_val))
+    plt.grid()
+    axis_1 = plt.subplot(413)
+    plt.plot(time_values_ms, voltage_monitor[0].vt / b2.mV, lw=2)
+    plt.grid()
+    axis_2 = plt.subplot(414)
+    plt.plot(time_values_ms, (voltage_monitor[0].w1+voltage_monitor[0].w2) / b2.mV, lw=2)
+
     plt.grid()
 
     # plt.legend(["v", "vt"], fontsize=12, loc=legend_location)

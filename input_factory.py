@@ -42,7 +42,7 @@ def get_step_current(t_start, t_end, unit_time, amplitude, append_zero=True):
 
 
 
-def get_ou_current(I0, plot=False, unit_time=1*b2.ms):
+def get_ou_current(I0, plot=False, unit_time=1*b2.ms, len_current=1000):
     tau = 10.0  # ms
     #Delta_T = 1.0/20  #ms, sampling freq = 20 kHz
     Delta_T = 1.0/10  #ms, sampling freq = 20 kHz
@@ -52,7 +52,6 @@ def get_ou_current(I0, plot=False, unit_time=1*b2.ms):
     f = 0.2 * 0.001  # kHz 
     
     
-    len_current = 2500  # ms
     len = int(len_current / Delta_T)  # length of arrays: I and time
     I = numpy.zeros((len,1))  # nA
     time = numpy.arange(0, len_current, Delta_T)  # ms
@@ -74,7 +73,7 @@ def get_ou_current(I0, plot=False, unit_time=1*b2.ms):
     
         plt.show()
 
-    I = I/100 * b2.namp
+    I = I[:,0]/100 * b2.namp
     I = b2.TimedArray(I, dt = 1. * unit_time)
 
     return I
