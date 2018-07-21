@@ -1,7 +1,6 @@
 '''
-	Project masters thesis
-	containing everything
-	let's do it
+	Project 
+	final containing everything
 	started by sharbatc
 '''
 import brian2 as b2
@@ -268,87 +267,95 @@ pops['L4nfs'] = b2.NeuronGroup(params.size['L4']['nfs'],model=model_eqs_3, reset
 # inside L4 #
 
 conn_L4exc_L4exc = b2.Synapses(pops['L4exc'], pops['L4exc'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L4exc.connect(p = params.conn_param['L4_L4']['exc_exc']['p'])
-conn_L4exc_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
+# conn_L4exc_L4exc.connect(p = params.conn_param['L4_L4']['exc_exc']['p'])
+# conn_L4exc_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
 
 conn_L4fs_L4fs = b2.Synapses(pops['L4fs'], pops['L4fs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L4fs_L4fs.connect(p = params.conn_param['L4_L4']['fs_fs']['p'])
-conn_L4fs_L4fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['fs_fs']['w']*b2.nA, v_rest_2, E_inh)
+# conn_L4fs_L4fs.connect(p = params.conn_param['L4_L4']['fs_fs']['p'])
+# conn_L4fs_L4fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['fs_fs']['w']*b2.nA, v_rest_2, E_inh)
 
 conn_L4exc_L4fs = b2.Synapses(pops['L4exc'], pops['L4fs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L4fs.connect(p = params.conn_param['L4_L4']['exc_fs']['p'])
-conn_L4exc_L4fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_fs']['w']*b2.nA, v_rest_2, E_exc)
+# conn_L4exc_L4fs.connect(p = params.conn_param['L4_L4']['exc_fs']['p'])
+# conn_L4exc_L4fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_fs']['w']*b2.nA, v_rest_2, E_exc)
 
 conn_L4fs_L4exc = b2.Synapses(pops['L4fs'], pops['L4exc'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L4fs_L4exc.connect(p = params.conn_param['L4_L4']['fs_exc']['p'])
-conn_L4fs_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['fs_exc']['w']*b2.nA, v_rest_1, E_inh)
+# conn_L4fs_L4exc.connect(p = params.conn_param['L4_L4']['fs_exc']['p'])
+# conn_L4fs_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['fs_exc']['w']*b2.nA, v_rest_1, E_inh)
 
 conn_L4exc_L4nfs = b2.Synapses(pops['L4exc'], pops['L4nfs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L4nfs.connect(p = params.conn_param['L4_L4']['exc_nfs']['p'])
-conn_L4exc_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
+# conn_L4exc_L4nfs.connect(p = params.conn_param['L4_L4']['exc_nfs']['p'])
+# conn_L4exc_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
 
 conn_L4nfs_L4nfs = b2.Synapses(pops['L4nfs'], pops['L4nfs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L4nfs_L4nfs.connect(p = params.conn_param['L4_L4']['nfs_nfs']['p'])
-conn_L4nfs_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_nfs']['w']*b2.nA, v_rest_3, E_inh)
+# conn_L4nfs_L4nfs.connect(p = params.conn_param['L4_L4']['nfs_nfs']['p'])
+# conn_L4nfs_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_nfs']['w']*b2.nA, v_rest_3, E_inh)
 
 conn_L4nfs_L4exc = b2.Synapses(pops['L4nfs'], pops['L4exc'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L4nfs_L4exc.connect(p = params.conn_param['L4_L4']['nfs_exc']['p'])
-conn_L4nfs_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_exc']['w']*b2.nA, v_rest_1, E_inh)
+# conn_L4nfs_L4exc.connect(p = params.conn_param['L4_L4']['nfs_exc']['p'])
+# conn_L4nfs_L4exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_exc']['w']*b2.nA, v_rest_1, E_inh)
 
 conn_L4nfs_L4fs = b2.Synapses(pops['L4nfs'], pops['L4fs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L4nfs_L4nfs.connect(p = params.conn_param['L4_L4']['nfs_fs']['p'])
-conn_L4nfs_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_fs']['w']*b2.nA, v_rest_2, E_inh)
+# conn_L4nfs_L4nfs.connect(p = params.conn_param['L4_L4']['nfs_fs']['p'])
+# conn_L4nfs_L4nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L4']['nfs_fs']['w']*b2.nA, v_rest_2, E_inh)
 
 ## inside L23
 conn_L23exc_L23exc = b2.Synapses(pops['L23exc'], pops['L23exc'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L23exc_L23exc.connect(p = params.conn_param['L23_L23']['exc_exc']['p'])
-conn_L23exc_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
+# conn_L23exc_L23exc.connect(p = params.conn_param['L23_L23']['exc_exc']['p'])
+# conn_L23exc_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
 
 conn_L23exc_L23nfs = b2.Synapses(pops['L23exc'], pops['L23nfs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L23exc_L23nfs.connect(p = params.conn_param['L23_L23']['exc_nfs']['p'])
-conn_L23exc_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
+# conn_L23exc_L23nfs.connect(p = params.conn_param['L23_L23']['exc_nfs']['p'])
+# conn_L23exc_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
 
 conn_L23exc_L23fs = b2.Synapses(pops['L23exc'], pops['L23fs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L23exc_L23fs.connect(p = params.conn_param['L23_L23']['exc_fs']['p'])
-conn_L23exc_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_nfs']['w']*b2.nA, v_rest_2, E_exc)
+# conn_L23exc_L23fs.connect(p = params.conn_param['L23_L23']['exc_fs']['p'])
+# conn_L23exc_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['exc_nfs']['w']*b2.nA, v_rest_2, E_exc)
 
 conn_L23fs_L23exc = b2.Synapses(pops['L23fs'], pops['L23exc'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23fs_L23exc.connect(p = params.conn_param['L23_L23']['fs_exc']['p'])
-conn_L23fs_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_exc']['w']*b2.nA, v_rest_1, E_inh)
+# conn_L23fs_L23exc.connect(p = params.conn_param['L23_L23']['fs_exc']['p'])
+# conn_L23fs_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_exc']['w']*b2.nA, v_rest_1, E_inh)
 
 conn_L23fs_L23nfs = b2.Synapses(pops['L23fs'], pops['L23nfs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23fs_L23nfs.connect(p = params.conn_param['L23_L23']['fs_nfs']['p'])
-conn_L23fs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_nfs']['w']*b2.nA, v_rest_3, E_inh)
+# conn_L23fs_L23nfs.connect(p = params.conn_param['L23_L23']['fs_nfs']['p'])
+# conn_L23fs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_nfs']['w']*b2.nA, v_rest_3, E_inh)
 
 conn_L23fs_L23fs = b2.Synapses(pops['L23fs'], pops['L23fs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23fs_L23fs.connect(p = params.conn_param['L23_L23']['fs_exc']['p'])
-conn_L23fs_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_fs']['w']*b2.nA, v_rest_2, E_inh)
+# conn_L23fs_L23fs.connect(p = params.conn_param['L23_L23']['fs_exc']['p'])
+# conn_L23fs_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['fs_fs']['w']*b2.nA, v_rest_2, E_inh)
 
 conn_L23nfs_L23exc = b2.Synapses(pops['L23nfs'], pops['L23exc'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23nfs_L23exc.connect(p = params.conn_param['L23_L23']['nfs_exc']['p'])
-conn_L23nfs_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_exc']['w']*b2.nA, v_rest_1, E_inh)
+# conn_L23nfs_L23exc.connect(p = params.conn_param['L23_L23']['nfs_exc']['p'])
+# conn_L23nfs_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_exc']['w']*b2.nA, v_rest_1, E_inh)
 
 conn_L23nfs_L23nfs = b2.Synapses(pops['L23nfs'], pops['L23nfs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23nfs_L23nfs.connect(p = params.conn_param['L23_L23']['nfs_nfs']['p'])
-conn_L23nfs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_nfs']['w']*b2.nA, v_rest_3, E_inh)
+# conn_L23nfs_L23nfs.connect(p = params.conn_param['L23_L23']['nfs_nfs']['p'])
+# conn_L23nfs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_nfs']['w']*b2.nA, v_rest_3, E_inh)
 
 conn_L23nfs_L23fs = b2.Synapses(pops['L23nfs'], pops['L23fs'], 'w : siemens', on_pre = 'g_inh+=w')
-conn_L23nfs_L23fs.connect(p = params.conn_param['L23_L23']['nfs_fs']['p'])
-conn_L23nfs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_fs']['w']*b2.nA, v_rest_2, E_inh)
+# conn_L23nfs_L23fs.connect(p = params.conn_param['L23_L23']['nfs_fs']['p'])
+# conn_L23nfs_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L23_L23']['nfs_fs']['w']*b2.nA, v_rest_2, E_inh)
 
 ## L4 to L23
 
 conn_L4exc_L23exc = b2.Synapses(pops['L4exc'], pops['L23exc'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L23exc.connect(p = params.conn_param['L4_L23']['exc_exc']['p'])
-conn_L4exc_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
+# conn_L4exc_L23exc.connect(p = params.conn_param['L4_L23']['exc_exc']['p'])
+# conn_L4exc_L23exc.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_exc']['w']*b2.nA, v_rest_1, E_exc)
 
 conn_L4exc_L23fs = b2.Synapses(pops['L4exc'], pops['L23fs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L23fs.connect(p = params.conn_param['L4_L23']['exc_fs']['p'])
-conn_L4exc_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_fs']['w']*b2.nA, v_rest_2, E_exc)
+# conn_L4exc_L23fs.connect(p = params.conn_param['L4_L23']['exc_fs']['p'])
+# conn_L4exc_L23fs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_fs']['w']*b2.nA, v_rest_2, E_exc)
 
 conn_L4exc_L23nfs = b2.Synapses(pops['L4exc'], pops['L23fs'], 'w : siemens', on_pre = 'g_exc+=w')
-conn_L4exc_L23nfs.connect(p = params.conn_param['L4_L23']['exc_nfs']['p'])
-conn_L4exc_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
+# conn_L4exc_L23nfs.connect(p = params.conn_param['L4_L23']['exc_nfs']['p'])
+# conn_L4exc_L23nfs.w = preprocessing.CUBA_to_COBA(params.conn_param['L4_L23']['exc_nfs']['w']*b2.nA, v_rest_3, E_exc)
+
+## thalamus!
+
+# conn_th_L4exc = Connection(thalamus, pops['L4exc'], sparseness=0.2, weight = preprocessing.CUBA_to_COBA(0.024*nA, El_1, E_exc) , state='g_exc')  # w should be fixed
+# conn_th_L4pv = Connection(thalamus, pops['L4pv'], sparseness=0.20, weight = preprocessing.CUBA_to_COBA(0.027*nA, El_2, E_exc), state='g_exc')  # w should be fixed
+
+# conn_th_L23exc = Connection(thalamus, pops['L23exc'], sparseness=0.05, weight = preprocessing.CUBA_to_COBA(0.024*nA, El_1, E_exc), state='g_exc')  # w should be fixed
+# conn_th_L23pv = Connection(thalamus, pops['L23pv'], sparseness=0.05, weight = preprocessing.CUBA_to_COBA(0.027*nA, El_2, E_exc), state='g_exc')  # w should be fixed
 
 
 ################## recorder ##########################
@@ -367,9 +374,12 @@ spikes['L23fs'] = b2.SpikeMonitor(pops['L23fs'])
 rec_v['L4exc'] = b2.StateMonitor(pops['L4exc'], 'v', record = True)
 rec_v['L4nfs'] = b2.StateMonitor(pops['L4nfs'], 'v', record = True)
 rec_v['L4fs'] = b2.StateMonitor(pops['L4fs'], 'v', record = True)
+rec_v['L23exc'] = b2.StateMonitor(pops['L23exc'], 'v', record = True)
+rec_v['L23nfs'] = b2.StateMonitor(pops['L23nfs'], 'v', record = True)
+rec_v['L23fs'] = b2.StateMonitor(pops['L23fs'], 'v', record = True)
 ################# running the simulation #############
 
-I_ext = get_ou_current(9,len_current=time)
+I_ext = get_ou_current(8,len_current=time)
 
 # for i in random.sample(range(1,1656),200):
 # 	pops['L4exc'][i:i+1].v = 0 * b2.mV
@@ -383,31 +393,39 @@ pops['L23nfs'].v = nfs_param['v_rest (mV)'] * b2.mV
 pops['L23fs'].v = fs_param['v_rest (mV)'] * b2.mV
 
 print("Before simulation" , datetime.datetime.now())
-pops_net = b2.Network(pops, thalamus)
-pops_net.add(spikes)
+pops_net = b2.Network(pops)
+pops_net.add(spikes, rec_v)
 pops_net.run(time*b2.ms, report = 'text')
 print("After simulation" , datetime.datetime.now())
-os.system('say "done chutiye"')
+os.system('say "finished"')
 print(params.size)
 
-################## plotting #########################
 
-fig = plt.figure()
+## put these in testing jupyter notebook : 
 
-plt.subplot(231)
-plt.plot(spikes['L23exc'].t, spikes['L23exc'].i,'o',markersize=1.5)
-plt.subplot(232)
-plt.plot(spikes['L23nfs'].t, spikes['L23nfs'].i,'o',markersize=1.5)
-plt.subplot(233)
-plt.plot(spikes['L23fs'].t, spikes['L23fs'].i,'o',markersize=1.5)
-plt.subplot(234)
-plt.plot(spikes['L4exc'].t, spikes['L4exc'].i,'o',markersize=1.5)
-plt.subplot(235)
-plt.plot(spikes['L4nfs'].t, spikes['L4nfs'].i,'o',markersize=1.5)
-plt.subplot(236)
-plt.plot(spikes['L4fs'].t, spikes['L4fs'].i,'o',markersize=1.5)
+# ################## plotting #########################
 
-plt.show()
+# fig = plt.figure()
+
+# plt.subplot(231)
+# plt.plot(spikes['L23exc'].t, spikes['L23exc'].i,'o',markersize=1.5)
+# plt.subplot(232)
+# plt.plot(spikes['L23nfs'].t, spikes['L23nfs'].i,'o',markersize=1.5)
+# plt.subplot(233)
+# plt.plot(spikes['L23fs'].t, spikes['L23fs'].i,'o',markersize=1.5)
+# plt.subplot(234)
+# plt.plot(spikes['L4exc'].t, spikes['L4exc'].i,'o',markersize=1.5)
+# plt.subplot(235)
+# plt.plot(spikes['L4nfs'].t, spikes['L4nfs'].i,'o',markersize=1.5)
+# plt.subplot(236)
+# plt.plot(spikes['L4fs'].t, spikes['L4fs'].i,'o',markersize=1.5)
+
+
+# fig2 = plt.figure()
+
+# plt.subplot(111)
+# plt.plot(rec_v['L4fs'].t/b2.ms, rec_v['L4fs'].v.T/b2.mV)
+# plt.show()
 
 
 
