@@ -37,27 +37,63 @@ def get_step_current(t_start, t_end, unit_time, amplitude, append_zero=True):
         tmp_size += 1
     tmp = np.zeros((tmp_size, 1)) * b2.amp
     tmp[t_start: t_end + 1, 0] = amplitude
+    tmp = tmp[:,0]
     curr = b2.TimedArray(tmp, dt=1. * unit_time)
     return curr
 
-
-
-def get_ou_current(I0, plot=False, unit_time=1*b2.ms, len_current=1000):
-    tau = 10.0  # ms
+def create_ou_current(I0, num_neurons,Delta_sigma = 2.0,sigma_0=1.0,plot=False, unit_time=1*b2.ms, len_current=1000):
+    tau = 1.0  # ms
     #Delta_T = 1.0/20  #ms, sampling freq = 20 kHz
     Delta_T = 1.0/10  #ms, sampling freq = 20 kHz
     #sigma = 1.0  # unitless
-    sigma_0 = 1.0  # unitless
+    # sigma_0 = 1.0  # unitless
     Delta_sigma = 2.0  # unitless
     f = 0.2 * 0.001  # kHz 
     
     
     len = int(len_current / Delta_T)  # length of arrays: I and time
-    I = numpy.zeros((len,1))  # nA
+    I = np.zeros((len,num_neurons))  # nA
+    time = np.arange(0, len_current, Delta_T)  # ms
+    sigma = np.zeros(len)  # unitless
+    
+    for num in range(0,num_neurons):
+        I[0,num] = I0
+        for counter in range(1, len):
+            sigma[counter] = sigma_0 * (1 + Delta_sigma * np.sin(2*np.pi*f*time[counter]))
+            I[counter,num] = I[counter-1,num] + (I0 - I[counter-1,num])/tau*Delta_T + np.sqrt(2*sigma[counter]**2*Delta_T/tau)*np.random.normal()  # N(0,1)
+    
+    if plot:
+        plt.plot(time, I, lw=2)
+    
+        plt.plot(time, I0*(1-numpy.exp(-time/tau)), color='red', lw=2)
+    
+        plt.figure()
+        plt.plot(time, sigma, color='green', lw=2)
+        plt.grid()
+    
+        plt.show()
+
+    I = I/100
+    return I
+
+
+def get_ou_current(I0, Delta_sigma = 2.0,sigma_0=1.0,plot=False, unit_time=1*b2.ms, len_current=1000):
+    tau = 1.0  # ms
+    #Delta_T = 1.0/20  #ms, sampling freq = 20 kHz
+    Delta_T = 1.0/10  #ms, sampling freq = 20 kHz
+    #sigma = 1.0  # unitless
+    # sigma_0 = 1.0  # unitless
+    Delta_sigma = 2.0  # unitless
+    f = 0.2 * 0.001  # kHz 
+    
+    
+    len = int(len_current / Delta_T)  # length of arrays: I and time
+    I = numpy.zeros(len)  # nA
     time = numpy.arange(0, len_current, Delta_T)  # ms
     sigma = numpy.zeros(len)  # unitless
     
-    I[0,0] = 0.0
+
+    I[0] = I0
     for counter in range(1, len):
         sigma[counter] = sigma_0 * (1 + Delta_sigma * numpy.sin(2*numpy.pi*f*time[counter]))
         I[counter] = I[counter-1] + (I0 - I[counter-1])/tau*Delta_T + numpy.sqrt(2*sigma[counter]**2*Delta_T/tau)*numpy.random.normal()  # N(0,1)
@@ -73,7 +109,7 @@ def get_ou_current(I0, plot=False, unit_time=1*b2.ms, len_current=1000):
     
         plt.show()
 
-    I = I[:,0]/100 * b2.namp
+    I = I/100 * b2.namp
     I = b2.TimedArray(I, dt = 1. * unit_time)
 
     return I

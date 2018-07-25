@@ -62,14 +62,19 @@ def plot_voltage_and_current_traces(voltage_monitor, spike_monitor, current, tit
     min_val = min(min_vval,min_vtval)
     margin = 0.05 * (max_val - min_val)
     plt.ylim((min_val - margin) / b2.mV, (max_val + margin) / b2.mV)
-    plt.xlabel("t [ms]")
     plt.ylabel("membrane voltage [mV]\n min: {0}\n max: {1}".format(min_val, max_val))
     plt.grid()
+
     axis_1 = plt.subplot(413)
     plt.plot(time_values_ms, voltage_monitor[0].vt / b2.mV, lw=2)
+    plt.ylabel('vt')
     plt.grid()
+
+
     axis_2 = plt.subplot(414)
     plt.plot(time_values_ms, (voltage_monitor[0].w1+voltage_monitor[0].w2) / b2.mV, lw=2)
+    plt.ylabel('w1+w2')
+    plt.xlabel("t [ms]")
 
     plt.grid()
 

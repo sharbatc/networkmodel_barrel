@@ -11,9 +11,10 @@ import pandas as pd
 
 
 ## tested params, might have to be changed##
-param_set_exc = 1 #1 for Carl-Hesam's hub neurons, 5 for Hesam's newest
-param_set_nfs = 4 
-param_set_fs  = 1 
+param_set_exc = 0 #1 for Carl-Hesam's hub neurons, 5 for Hesam's newest
+param_set_nfs = 0 
+param_set_fs  = 0
+## IMP : CHANGED PARAMS ARE NOT AT 0 
 ## tested params, might have to be changed ##
 
 ## loading the data

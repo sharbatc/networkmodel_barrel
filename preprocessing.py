@@ -176,4 +176,4 @@ def CUBA_to_COBA(w_sim_cuba, El, E_syn):
     returns synaptic weight in cond. based framework (micro siemens)
     '''
     
-    return - w_sim_cuba / (El - E_syn)
+    return (-w_sim_cuba)/(El - E_syn)
