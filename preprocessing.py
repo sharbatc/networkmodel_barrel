@@ -16,23 +16,6 @@ import math
 from brian2 import *    
     
 
-def Neuron_parameters():
-    
-    El = 0*mV
-    tau_m = 37.4*ms
-    tau_syn = 7.4*ms
-    R = 210*Mohm
-    
-    eqs = '''
-    dv/dt = (-(v-El) + R*I)/tau_m : volt
-    I_s : amp
-    I = I_e + I_i + I_s : amp
-    dI_e/dt = -I_e/tau_syn : amp
-    dI_i/dt = -I_i/tau_syn : amp
-    '''
-    
-    return eqs
-
 def find_nearest(array, value):
     '''
     find index of nearest elements of value in array
