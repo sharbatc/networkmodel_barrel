@@ -5,7 +5,9 @@ Master's project done under the supervision of Prof. Carl Petersen and Prof. Wul
 ## Things to do 
 
 -- Work out the biology of the barrel cortex and see if that makes sense to you.
--- Work out the part of the code that makes sense from Hesam's code
+-- Add noise
+-- PSTH and other experimental calculations
+-- Repeating experiments from Nolte (2018).
 
 ## Update
--- Worked out parameters, looked at Hesam's code
+-- Worked out parameters, wrote my own simulation protocol, changed diagrams, shifted to Brian2
