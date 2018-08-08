@@ -41,6 +41,8 @@ fs_param = fs_df.iloc[param_set_fs,:]
 
 # Other numbers are from Lefort's total imhibitory neurons, divided according to Rudy 2013 ratios
 
+# Important : new numbers are fs/nfs/exc
+
 # numbers 
 #L2_size = {'exc':546, 'sst':22, 'vip':32, 'pv':34}
 #L3_size = {'exc':1145, 'sst':45, 'vip':63,'pv':67}
@@ -168,25 +170,25 @@ conn_param['L23_L23']['exc_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.168}
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.82, 13.7, neural_param['L23']['fs']['tau_m'], neural_param['L23']['fs']['R']) # L23_exc to L23_fs, avermann 2011
 conn_param['L23_L23']['exc_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.575}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.52, 43.1, neural_param['L23']['fs']['tau_m'], neural_param['L23']['exc']['R']) # L23_fs to L23_exc, avermann 2011
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.52, 43.1, neural_param['L23']['exc']['tau_m'], neural_param['L23']['exc']['R']) # L23_fs to L23_exc, avermann 2011
 conn_param['L23_L23']['fs_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.60}
 
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.56, 15.8, neural_param['L23']['fs']['tau_m'], neural_param['L23']['fs']['R']) # L23_pv to L23_pv, avermann 2011
 conn_param['L23_L23']['fs_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.55}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.244, 17.9, neural_param['L23']['exc']['tau_m'], neural_param['L23']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.244, 17.9, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst
 conn_param['L23_L23']['exc_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.244}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 56.2, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['exc']['R']) # nfs paramteres of avermann 2011 instead of sst
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 56.2, neural_param['L23']['exc']['tau_m'], neural_param['L23']['exc']['R']) # nfs paramteres of avermann 2011 instead of sst
 conn_param['L23_L23']['nfs_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.465}
 
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 33.3, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst
 conn_param['L23_L23']['nfs_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.381}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 33.3, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['fs']['R']) # nfs paramteres of avermann 2011 instead of sst
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 33.3, neural_param['L23']['fs']['tau_m'], neural_param['L23']['fs']['R']) # nfs paramteres of avermann 2011 instead of sst
 conn_param['L23_L23']['nfs_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.381}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 33.3, neural_param['L23']['fs']['tau_m'], neural_param['L23']['nfs']['R']) # avermann 2011, wrong half-width
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 33.3, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['nfs']['R']) # avermann 2011, wrong half-width
 conn_param['L23_L23']['fs_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.379}
 
 #### inside L4
@@ -196,25 +198,25 @@ conn_param['L4_L4'] = {}
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.95, 50.0, neural_param['L4']['exc']['tau_m'], neural_param['L4']['exc']['R']) # L4_exc to L4_exc, lefort 2009
 conn_param['L4_L4']['exc_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.243} 
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.82, 13.7, neural_param['L4']['exc']['tau_m'], neural_param['L4']['fs']['R']) # L4_exc to L4_pv, copy from L2/3, except p adopted from Taro's presentation
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.82, 13.7, neural_param['L4']['fs']['tau_m'], neural_param['L4']['fs']['R']) # L4_exc to L4_pv, copy from L2/3, except p adopted from Taro's presentation
 conn_param['L4_L4']['exc_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.69}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.52, 43.1, neural_param['L4']['fs']['tau_m'], neural_param['L4']['exc']['R']) # L4_pv to L4_exc, copy from L2/3, except p adopted from Taro's presentation
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.52, 43.1, neural_param['L4']['exc']['tau_m'], neural_param['L4']['exc']['R']) # L4_pv to L4_exc, copy from L2/3, except p adopted from Taro's presentation
 conn_param['L4_L4']['fs_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.67}
 
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.56, 15.8, neural_param['L4']['fs']['tau_m'], neural_param['L4']['fs']['R']) # L4_pv to L4_pv, all copy from L2/3
 conn_param['L4_L4']['fs_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.55}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.244, 17.9, neural_param['L4']['exc']['tau_m'], neural_param['L4']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst, copy from L2/3, except p adopted from Taro's presentation
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.244, 17.9, neural_param['L4']['nfs']['tau_m'], neural_param['L4']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst, copy from L2/3, except p adopted from Taro's presentation
 conn_param['L4_L4']['exc_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.40}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 56.2, neural_param['L4']['nfs']['tau_m'], neural_param['L4']['exc']['R']) # nfs paramteres of avermann 2011 instead of sst, copy from L2/3, except p adopted from Taro's presentation
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 56.2, neural_param['L4']['exc']['tau_m'], neural_param['L4']['exc']['R']) # nfs paramteres of avermann 2011 instead of sst, copy from L2/3, except p adopted from Taro's presentation
 conn_param['L4_L4']['nfs_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.29}
 
 tmp_tau, tmp_w = preprocessing.Fit_PSP(0.49, 33.3, neural_param['L4']['nfs']['tau_m'], neural_param['L4']['nfs']['R']) # nfs paramteres of avermann 2011 instead of sst, all copy from L2/3
 conn_param['L4_L4']['nfs_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.381}
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 20.0, neural_param['L4']['nfs']['tau_m'], neural_param['L4']['fs']['R']) # L4_sst to L4_pv, actually vip to pv of L23, p adopted from Taro's presentation
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.37, 20.0, neural_param['L4']['fs']['tau_m'], neural_param['L4']['fs']['R']) # L4_sst to L4_pv, actually vip to pv of L23, p adopfted from Taro's presentation
 conn_param['L4_L4']['nfs_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.63}
 
 ## fs to nfs? (Avermann?)
@@ -226,9 +228,9 @@ tmp_tau, tmp_w = preprocessing.Fit_PSP(0.6, 31.0, neural_param['L4']['exc']['tau
 conn_param['L4_L23']['exc_exc'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.13} 
 
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.50, 31.0, neural_param['L23']['exc']['tau_m'], neural_param['L23']['fs']['R']) # L4_exc to L23_pv, lefort 2009
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.50, 31.0, neural_param['L23']['fs']['tau_m'], neural_param['L23']['fs']['R']) # L4_exc to L23_pv, lefort 2009
 conn_param['L4_L23']['exc_fs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.2} 
 
-tmp_tau, tmp_w = preprocessing.Fit_PSP(0.50, 31.0, neural_param['L23']['exc']['tau_m'], neural_param['L23']['nfs']['R']) # L4_exc to L23_pv, lefort 2009
+tmp_tau, tmp_w = preprocessing.Fit_PSP(0.50, 31.0, neural_param['L23']['nfs']['tau_m'], neural_param['L23']['nfs']['R']) # L4_exc to L23_nfs, lefort 2009
 conn_param['L4_L23']['exc_nfs'] = {'w':tmp_w, 'tau_syn':tmp_tau, 'p':0.2} 
 
